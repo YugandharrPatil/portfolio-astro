@@ -1,0 +1,40 @@
+---
+import fetchRepos from "@/lib/utils/calls";
+import { db } from "@/lib/db";
+import { repos as reposTable } from "@/lib/db/schema";
+import { asc } from "drizzle-orm";
+import ProjectCard from "./ProjectCard.astro";
+import type { GitHubRepo } from "@/lib/utils/types";
+
+let filteredRepos: GitHubRepo[] = [];
+
+try {
+  const fetchedRepos = await fetchRepos();
+  const dbRepos = await db.select().from(reposTable).orderBy(asc(reposTable.order));
+
+  filteredRepos = dbRepos
+    .map((r) => fetchedRepos.find((repo) => repo.name === r.name))
+    .filter((repo): repo is GitHubRepo => Boolean(repo));
+} catch (err) {
+  console.error("Failed to load projects:", err);
+}
+---
+
+<main class="relative container mx-auto px-4">
+  <h1 class="heading">Projects</h1>
+  <div class="flex w-fit flex-wrap justify-center gap-4 p-4 mx-auto">
+    {filteredRepos.length === 0 ? (
+      <p class="text-center text-lg text-gray-500">No projects found.</p>
+    ) : (
+      filteredRepos.map((repo) => (
+        <ProjectCard
+          repoName={repo.name}
+          repoDescription={repo.description}
+          languages={repo.language}
+          repoURL={repo.html_url}
+          hostingURL={repo.homepage}
+        />
+      ))
+    )}
+  </div>
+</main>

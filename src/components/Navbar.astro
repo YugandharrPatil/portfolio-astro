@@ -1,0 +1,150 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import Button from "./Button.astro";
+
+const BLOG_LINK = "https://blog.yugz.dev";
+
+type NavItem = {
+  label: string;
+  href: string;
+  external?: boolean;
+  desktop?: boolean;
+  mobile?: boolean;
+  iconSvg?: string;
+};
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Home", href: "#", desktop: true },
+  {
+    label: "About",
+    href: "#about",
+    desktop: true,
+    mobile: true,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-4 w-4"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>`,
+  },
+  {
+    label: "Skills",
+    href: "#skills",
+    desktop: true,
+    mobile: true,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-4 w-4"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5a2.85 2.85 0 1 1-4-4L17 3Z"/><path d="m8.5 7.5 8 8"/></svg>`,
+  },
+  {
+    label: "Projects",
+    href: "#projects",
+    desktop: true,
+    mobile: true,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-4 w-4"><rect width="18" height="18" rx="2" ry="2" x="3" y="3"/><line x1="3" x2="21" y1="9" y2="9"/><line x1="9" x2="9" y1="21" y2="9"/></svg>`,
+  },
+  {
+    label: "Blog",
+    href: BLOG_LINK,
+    desktop: true,
+    mobile: true,
+    external: true,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-4 w-4"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`,
+  },
+  {
+    label: "Let's Chat",
+    href: "#contact",
+    mobile: true,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-4 w-4"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+  },
+];
+---
+
+<nav class="bg-background font-poppins fixed top-0 z-50 flex h-24 w-full mx-auto border-b border-gray-800">
+  <div class="relative container flex h-full w-full items-center justify-between mx-auto px-4">
+    {/* LOGO */}
+    <div>
+      <a href="/">
+        <h1 class="text-3xl font-bold hover:text-neutral-500">
+          Yugz<span class="text-orange-500">.</span>
+        </h1>
+      </a>
+    </div>
+
+    {/* DESKTOP NAVBAR */}
+    <div class="absolute left-1/2 hidden -translate-x-1/2 transform lg:flex gap-1">
+      {NAV_ITEMS.filter((item) => item.desktop).map((item) => (
+        <Button
+          href={item.href}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noreferrer" : undefined}
+          className="text-base tracking-wide"
+          variant="ghost"
+        >
+          <span>{item.label}</span>
+          {item.external && (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-1 inline h-5 w-5"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+          )}
+        </Button>
+      ))}
+    </div>
+
+    {/* MOBILE NAVBAR TOGGLE */}
+    <div class="flex gap-2 lg:hidden relative">
+      <div class="relative">
+        <Button id="menu-toggle-btn" variant="outline" size="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-[1.2rem] w-[1.2rem]"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </Button>
+
+        {/* Dropdown Menu */}
+        <div id="mobile-menu" class="hidden absolute right-0 mt-2 w-40 rounded-md border border-neutral-200 bg-white p-1 text-neutral-950 shadow-md dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50 z-50">
+          {NAV_ITEMS.filter((item) => item.mobile).map((item) => (
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
+              class="flex w-full items-center rounded-sm px-2 py-1.5 text-sm outline-hidden hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            >
+              <Fragment set:html={item.iconSvg} />
+              <span>{item.label}</span>
+              {item.external && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 inline h-4 w-4"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+              )}
+            </a>
+          ))}
+        </div>
+      </div>
+      <ThemeToggle />
+    </div>
+
+    {/* DESKTOP RIGHT */}
+    <div class="flex gap-2 max-lg:hidden">
+      <Button
+        href="#contact"
+        className="mx-1 text-base font-bold tracking-wide"
+        variant="outline"
+      >
+        Let's Chat
+      </Button>
+      <ThemeToggle />
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggleBtn = document.getElementById("menu-toggle-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  toggleBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    mobileMenu?.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!mobileMenu?.classList.contains("hidden")) {
+      const target = e.target as HTMLElement;
+      if (!toggleBtn?.contains(target) && !mobileMenu?.contains(target)) {
+        mobileMenu?.classList.add("hidden");
+      }
+    }
+  });
+
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+    });
+  });
+</script>

@@ -1,0 +1,49 @@
+---
+import { languages, webDev } from "@/snippets/skills";
+import Card from "./Card.astro";
+import ImageIcon from "./ImageIcon.astro";
+
+type SkillCardType = {
+  id: string;
+  heading: string;
+  iconList: {
+    id: number;
+    imageSrc: any;
+    tooltip: string;
+  }[];
+};
+
+const SKILL_CARDS: SkillCardType[] = [
+  {
+    id: "languages",
+    heading: "Languages",
+    iconList: languages,
+  },
+  {
+    id: "webdev",
+    heading: "Application Development",
+    iconList: webDev,
+  },
+];
+---
+
+<main class="container mx-auto px-4">
+  <h1 class="heading">Skills</h1>
+  <div class="flex flex-wrap justify-center gap-4">
+    {SKILL_CARDS.map((skill) => (
+      <Card>
+        <h1 class="my-4 text-lg font-semibold sm:text-xl text-center sm:text-left">
+          {skill.heading}
+        </h1>
+        <div class="flex gap-5 max-[500px]:gap-3">
+          {skill.iconList.map((icon) => (
+            <ImageIcon
+              imageSrc={icon.imageSrc}
+              tooltip={icon.tooltip}
+            />
+          ))}
+        </div>
+      </Card>
+    ))}
+  </div>
+</main>

@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  imageSrc: any;
+  tooltip: string;
+  customSize?: {
+    height: number;
+    width: number;
+  };
+}
+
+const { imageSrc, tooltip, customSize } = Astro.props;
+
+const h = customSize ? `h-${customSize.height}` : "h-8 sm:h-12 max-[500px]:h-6";
+const w = customSize ? `w-${customSize.width}` : "w-8 sm:w-12 max-[500px]:w-6";
+---
+<div class="group relative cursor-pointer rounded-md p-1 hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50 flex items-center justify-center">
+  <Image
+    class:list={[h, w, "object-contain"]}
+    src={imageSrc}
+    alt={tooltip}
+  />
+  <div class="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-popover text-popover-foreground border border-border px-3 py-1.5 text-xs rounded-md shadow-md whitespace-nowrap">
+    {tooltip}
+  </div>
+</div>

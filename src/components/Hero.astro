@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+import SocialIcons from "./SocialIcons.astro";
+import profilePic from "../../public/images/profile/sex.jpg";
+---
+
+<main class="bg-background mt-32 flex flex-col items-center justify-center xl:flex-row container mx-auto">
+  {/* TEXT SECTION */}
+  <div class="order-last text-center xl:order-first xl:w-1/2 xl:text-left px-4">
+    <h1 class="font-playfairDisplay text-5xl leading-tight font-black tracking-normal max-xl:my-10 sm:text-7xl xl:text-8xl">
+      Hi! I'm <br />
+      <span class="tracking-wide">
+        <span class="z-10 text-[#67e8f9] drop-shadow-[-6px_0px_#e11d48]">
+          Y
+        </span>
+        ugandhar
+      </span>
+    </h1>
+    <h3 class="font-sourceCodePro mt-5 text-2xl font-medium text-gray-600 lg:mt-8">
+      Builder | Computer Nerd | Autodidact
+    </h3>
+    <SocialIcons />
+  </div>
+  {/* IMAGE */}
+  <div class="order-first w-5/6 sm:w-2/3 lg:w-1/2 xl:order-last">
+    <div class="ImageContainer relative mx-auto aspect-3/4 h-full xl:w-3/4">
+      <Image
+        class="object-cover w-full h-full rounded-xl"
+        src={profilePic}
+        alt="profile"
+        quality={100}
+      />
+    </div>
+  </div>
+</main>

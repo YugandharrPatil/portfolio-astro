@@ -1,0 +1,59 @@
+---
+import Button from "./Button.astro";
+
+interface Props {
+  repoName: string;
+  repoDescription?: string | null;
+  languages?: string | null;
+  repoURL: string;
+  hostingURL?: string | null;
+}
+
+const {
+  repoName,
+  repoDescription,
+  languages,
+  repoURL,
+  hostingURL,
+} = Astro.props;
+
+const languageColor = 
+  languages === "JavaScript"
+    ? "text-[#f7df1e]"
+    : languages === "TypeScript"
+      ? "text-[#007acc]"
+      : languages === "Go"
+        ? "text-[#00ADD8]"
+        : languages === "C#"
+          ? "text-[#684D95]"
+          : "text-white";
+---
+
+<div class="rounded-xl border border-neutral-200 bg-white text-neutral-950 shadow-sm dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-50 w-72 pt-4">
+  <div class="flex h-full flex-col justify-around text-center p-6">
+    <h3 class="text-lg font-bold flex items-center justify-center">
+      <!-- BookMarked Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 inline h-6 w-6 text-green-700">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+        <path d="M6 6h10"></path>
+        <path d="M6 10h10"></path>
+      </svg>
+      {repoName}
+    </h3>
+    <p class="mt-2 text-lg min-h-[50px]">{repoDescription || "—"}</p>
+    <small class={`mt-2 text-base font-semibold ${languageColor}`}>
+      {languages || "—"}
+    </small>
+    <br />
+    <div class="flex justify-center gap-3">
+      <Button href={repoURL} target="_blank" variant="default" className="text-lg">
+        Repo
+      </Button>
+      {!!hostingURL && (
+        <Button href={hostingURL} target="_blank" variant="secondary" className="text-lg">
+          Visit
+        </Button>
+      )}
+    </div>
+  </div>
+</div>
