@@ -10,5 +10,8 @@ export default defineConfig({
   integrations: [react(), icon()],
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ['tslib', 'react-remove-scroll'],
+    },
   },
 });
