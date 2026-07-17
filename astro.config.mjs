@@ -4,9 +4,15 @@ import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 import vercel from '@astrojs/vercel';
 import path from 'path';
+import fs from 'fs';
 
-// Resolve to the ESM entry point file of tslib
-const tslibPath = path.resolve(process.cwd(), 'node_modules/tslib/tslib.es6.js');
+// Resolve to the physical ESM entry point file of tslib (un-symlinked)
+let tslibPath;
+try {
+  tslibPath = fs.realpathSync(path.resolve(process.cwd(), 'node_modules/tslib/tslib.es6.js'));
+} catch (e) {
+  tslibPath = 'tslib';
+}
 
 // https://astro.build/config
 export default defineConfig({
