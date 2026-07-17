@@ -3,16 +3,10 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import icon from 'astro-icon';
 import vercel from '@astrojs/vercel';
-import { createRequire } from 'module';
+import path from 'path';
 
-const require = createRequire(import.meta.url);
-
-let tslibPath;
-try {
-  tslibPath = require.resolve('tslib');
-} catch (e) {
-  tslibPath = 'tslib';
-}
+// Resolve to the ESM entry point file of tslib
+const tslibPath = path.resolve(process.cwd(), 'node_modules/tslib/tslib.es6.js');
 
 // https://astro.build/config
 export default defineConfig({
