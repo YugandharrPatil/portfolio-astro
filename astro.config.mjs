@@ -23,7 +23,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: ['tslib', 'react-remove-scroll'],
+      noExternal: true,
     },
   },
 });
