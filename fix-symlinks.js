@@ -17,8 +17,16 @@ try {
     process.exit(1);
   }
 
-  // Remove existing target (symlink or dir)
-  if (fs.existsSync(targetDir) || fs.lstatSync(targetDir).isSymbolicLink()) {
+  // Remove existing target (symlink or dir) safely
+  let exists = false;
+  try {
+    fs.lstatSync(targetDir);
+    exists = true;
+  } catch (e) {
+    // Target does not exist (not even a broken symlink)
+  }
+
+  if (exists) {
     console.log('Removing existing tslib directory or symlink...');
     fs.rmSync(targetDir, { recursive: true, force: true });
   }
