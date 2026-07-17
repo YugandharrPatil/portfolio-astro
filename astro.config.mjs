@@ -8,8 +8,8 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Map tslib directly to our local vendored file
-const tslibPath = path.resolve(__dirname, 'src/tslib.es6.js');
+// Map tslib directly to the physical ESM file in the node_modules folder
+const tslibPath = path.resolve(__dirname, 'node_modules/tslib/tslib.es6.js');
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: true,
+      noExternal: ['tslib', 'react-remove-scroll'],
     },
   },
 });
